@@ -3,19 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosso Amor</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Nosso Amor ❤️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff4d4d;
+        }
+        #contador {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        #foto {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Marcelo & Adrielly</h1>
-        <p>Estamos juntos há:</p>
-        <h2 id="contador"></h2>
-        <div class="foto">
-            <img id="fotoCasal" src="foto.jpg" alt="Foto do casal">
-        </div>
-        <p>Com amor, sempre! ❤️</p>
-    </div>
-    <script src="script.js"></script>
+    <h1>Marcelo ❤️ Adrielly</h1>
+    <p>Estamos juntos há:</p>
+    <div id="contador"></div>
+    <img id="foto" src="foto.jpg" alt="Foto do casal">
+
+    <script>
+        function atualizarContador() {
+            // Data inicial: 14 de julho de 2024, no horário de Brasília (GMT-3)
+            const dataInicial = new Date("2024-07-14T00:00:00-03:00").getTime();
+            const agora = new Date().getTime();
+
+            // Diferença entre as datas
+            let diferenca = agora - dataInicial;
+
+            // Cálculo do tempo decorrido
+            let segundos = Math.floor((diferenca / 1000) % 60);
+            let minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+            let horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+            let dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+
+            // Exibir no site
+            document.getElementById("contador").innerHTML = 
+                `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+
+            // Atualizar a cada segundo
+            setTimeout(atualizarContador, 1000);
+        }
+
+        // Iniciar contador
+        atualizarContador();
+    </script>
 </body>
 </html>
