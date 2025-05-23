@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rifa Premiada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .numeros {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    button {
+      width: 50px;
+      height: 50px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #2ecc71;
+      color: white;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Rifa do Pix de R$100</h1>
+  <p>Escolha um número e fale comigo no WhatsApp para reservar.</p>
+  <div class="numeros" id="numeros"></div>
+
+  <script>
+    const seuNumero = "5599985482448"; // Ex: 5599999999999
+    const numerosReservados = [3, 8, 17, 22]; // Marque aqui os números já ocupados
+
+    const container = document.getElementById("numeros");
+
+    for (let i = 1; i <= 100; i++) {
+      const btn = document.createElement("button");
+      const numero = i.toString().padStart(2, '0');
+      btn.textContent = numero;
+
+      if (numerosReservados.includes(i)) {
+        btn.disabled = true;
+      } else {
+        btn.onclick = () => {
+          const msg = `Olá! Gostaria de reservar o número ${numero} da rifa do Pix de R$100.`;
+          const url = `https://wa.me/${5599985482448}?text=${encodeURIComponent(msg)}`;
+          window.open(url, '_blank');
+        };
+      }
+
+      container.appendChild(btn);
+    }
+  </script>
+
+</body>
+</html>
