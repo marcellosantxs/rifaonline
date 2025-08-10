@@ -4,58 +4,112 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rifa 25k — R$3.000 (2000 números)</title>
+  <title>🎉 Rifa Especial 25k Seguidores — Prêmio R$3.000</title>
   <style>
-    :root{--bg:#0b0b0f;--card:#0f1720;--accent:#10b981;--muted:#94a3b8;--white:#e6eef6}
-    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
-    body{margin:0;background:linear-gradient(180deg,#030312 0%, #071027 100%);color:var(--white);padding:16px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    h1{margin:0;font-size:20px}
-    p.small{margin:4px 0;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:12px}
-    .ticket{background:var(--card);padding:8px;border-radius:6px;text-align:center;cursor:pointer;border:2px solid transparent;text-decoration:none;color:inherit}
-    .ticket.sold{background:linear-gradient(90deg, rgba(16,185,129,0.14), rgba(16,185,129,0.06));border-color:rgba(16,185,129,0.32)}
-    .ticket .num{font-weight:700}
-    footer{margin-top:18px;color:var(--muted)}
-    .meta{display:flex;gap:12px;align-items:center}
-    .countdown{font-weight:700}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    :root{
+      --bg:#0b0f19;
+      --card:#141b2d;
+      --accent:#00d084;
+      --accent-dark:#00a46c;
+      --muted:#94a3b8;
+      --white:#f5f8fa;
+    }
+    *{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#020617 0%, #0f172a 100%);
+      color:var(--white);
+      padding:16px;
+      min-height:100vh;
+    }
+    header{
+      text-align:center;
+      padding:20px 10px;
+    }
+    h1{
+      margin:0;
+      font-size:28px;
+      font-weight:700;
+      color:var(--accent);
+    }
+    p.small{
+      margin:6px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .prize{
+      font-size:20px;
+      font-weight:600;
+      margin-top:8px;
+      background:var(--accent);
+      color:#000;
+      display:inline-block;
+      padding:6px 14px;
+      border-radius:8px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(60px,1fr));
+      gap:8px;
+      margin-top:20px;
+    }
+    a.ticket{
+      background:var(--card);
+      padding:10px;
+      border-radius:8px;
+      text-align:center;
+      font-weight:600;
+      color:var(--white);
+      text-decoration:none;
+      transition:all 0.2s ease;
+      border:2px solid transparent;
+    }
+    a.ticket:hover{
+      transform:translateY(-3px);
+      border-color:var(--accent);
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);
+    }
+    footer{
+      margin-top:24px;
+      text-align:center;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .countdown{
+      margin-top:14px;
+      font-weight:700;
+      color:var(--accent);
+      font-size:16px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>Rifa — 25k seguidores • Prêmio R$3.000</h1>
-      <p class="small">2000 números (0001 — 2000) · Sorteio: <strong>10/12/2025</strong></p>
-    </div>
-    <div class="meta">
-      <div>Preço por número:</div>
-      <div style="font-weight:700;margin-left:6px">R$1,99</div>
-    </div>
-  </header>  <section style="margin-top:12px">
-    <div class="meta">
-      <div class="countdown" id="countdown">-- dias --</div>
-    </div><div class="grid" id="grid"></div>
-
-<footer>
-  <p class="small">Clique no número desejado para ser redirecionado ao meu WhatsApp e realizar o pagamento. Após confirmar, enviarei a confirmação da reserva.</p>
-</footer>
-
-  </section>  <script>
+    <h1>🎉 Rifa Especial — 25k Seguidores</h1>
+    <p class="small">2000 números (0001 — 2000)</p>
+    <div class="prize">💰 Prêmio: R$ 3.000</div>
+    <div class="countdown" id="countdown"></div>
+    <p class="small">Sorteio: 10/12/2025</p>
+  </header>  <main>
+    <div class="grid" id="grid"></div>
+  </main>  <footer>
+    Clique no número para falar comigo no WhatsApp e garantir sua participação. Boa sorte! 🍀
+  </footer>  <script>
     const TOTAL = 2000;
     const DRAW_DATE = new Date('2025-12-10T20:00:00');
-    const WHATSAPP_NUMBER = '5599984886431'; // número no formato internacional
+    const WHATSAPP_NUMBER = '5599984886431';
 
     function pad(n){return String(n).padStart(4,'0')}
 
     const grid = document.getElementById('grid');
     function render(){
-      grid.innerHTML='';
       for(let i=1;i<=TOTAL;i++){
         const link = document.createElement('a');
         link.className='ticket';
         link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá,%20tenho%20interesse%20no%20número%20${pad(i)}%20da%20rifa.`;
         link.target = '_blank';
-        link.innerHTML = `<div class="num">${pad(i)}</div>`;
+        link.innerHTML = pad(i);
         grid.appendChild(link);
       }
     }
@@ -64,10 +118,10 @@
       const now = new Date();
       const diff = DRAW_DATE - now;
       const el = document.getElementById('countdown');
-      if(diff<=0) el.textContent = `Sorteio disponível (data atingida)`;
+      if(diff<=0) el.textContent = `📅 Sorteio disponível (data atingida)`;
       else {
         const days = Math.floor(diff / (1000*60*60*24));
-        el.textContent = `${days} dias para o sorteio (${DRAW_DATE.toLocaleDateString()})`;
+        el.textContent = `⏳ Faltam ${days} dias para o sorteio`;
       }
     }
 
