@@ -1,74 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rifa Premiada</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rifa 25k — R$50.000 (2000 números)</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      background: #f9f9f9;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    .numeros {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    button {
-      width: 50px;
-      height: 50px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      background: #2ecc71;
-      color: white;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #bdc3c7;
-      cursor: not-allowed;
-    }
+    :root{--bg:#0b0b0f;--card:#0f1720;--accent:#10b981;--muted:#94a3b8;--white:#e6eef6}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    body{margin:0;background:linear-gradient(180deg,#030312 0%, #071027 100%);color:var(--white);padding:16px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    h1{margin:0;font-size:20px}
+    p.small{margin:4px 0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:12px}
+    .ticket{background:var(--card);padding:8px;border-radius:6px;text-align:center;cursor:pointer;border:2px solid transparent;text-decoration:none;color:inherit}
+    .ticket.sold{background:linear-gradient(90deg, rgba(16,185,129,0.14), rgba(16,185,129,0.06));border-color:rgba(16,185,129,0.32)}
+    .ticket .num{font-weight:700}
+    footer{margin-top:18px;color:var(--muted)}
+    .meta{display:flex;gap:12px;align-items:center}
+    .countdown{font-weight:700}
   </style>
 </head>
 <body>
+  <header>
+    <div>
+      <h1>Rifa — 25k seguidores • Prêmio R$50.000</h1>
+      <p class="small">2000 números (0001 — 2000) · Sorteio: <strong>10/12/2025</strong></p>
+    </div>
+    <div class="meta">
+      <div>Preço por número:</div>
+      <div style="font-weight:700;margin-left:6px">R$25,00</div>
+    </div>
+  </header>  <section style="margin-top:12px">
+    <div class="meta">
+      <div class="countdown" id="countdown">-- dias --</div>
+    </div><div class="grid" id="grid"></div>
 
-  <h1>Rifa do Pix de R$100</h1>
-  <p>Apenas R$2,00 um número! 🙀
-    Por Tempo Limitado</p>
-  <div class="numeros" id="numeros"></div>
+<footer>
+  <p class="small">Clique no número desejado para ser redirecionado ao meu WhatsApp e realizar o pagamento. Após confirmar, enviarei a confirmação da reserva.</p>
+</footer>
 
-  <script>
-    const seuNumero = "5599985482448"; // Ex: 5599999999999
-    const numerosReservados = []; // Marque aqui os números já ocupados
+  </section>  <script>
+    const TOTAL = 2000;
+    const DRAW_DATE = new Date('2025-12-10T20:00:00');
+    const WHATSAPP_NUMBER = '5599984886431'; // número no formato internacional
 
-    const container = document.getElementById("numeros");
+    function pad(n){return String(n).padStart(4,'0')}
 
-    for (let i = 1; i <= 100; i++) {
-      const btn = document.createElement("button");
-      const numero = i.toString().padStart(2, '0');
-      btn.textContent = numero;
-
-      if (numerosReservados.includes(i)) {
-        btn.disabled = true;
-      } else {
-        btn.onclick = () => {
-          const msg = `Olá! Gostaria de reservar o número ${numero} da rifa do Pix de R$100.`;
-          const url = `https://wa.me/${5599985482448}?text=${encodeURIComponent(msg)}`;
-          window.open(url, '_blank');
-        };
+    const grid = document.getElementById('grid');
+    function render(){
+      grid.innerHTML='';
+      for(let i=1;i<=TOTAL;i++){
+        const link = document.createElement('a');
+        link.className='ticket';
+        link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá,%20tenho%20interesse%20no%20número%20${pad(i)}%20da%20rifa.`;
+        link.target = '_blank';
+        link.innerHTML = `<div class="num">${pad(i)}</div>`;
+        grid.appendChild(link);
       }
-
-      container.appendChild(btn);
     }
-  </script>
 
-</body>
+    function updateCountdown(){
+      const now = new Date();
+      const diff = DRAW_DATE - now;
+      const el = document.getElementById('countdown');
+      if(diff<=0) el.textContent = `Sorteio disponível (data atingida)`;
+      else {
+        const days = Math.floor(diff / (1000*60*60*24));
+        el.textContent = `${days} dias para o sorteio (${DRAW_DATE.toLocaleDateString()})`;
+      }
+    }
+
+    render();
+    updateCountdown();
+    setInterval(updateCountdown, 60*1000);
+  </script></body>
 </html>
