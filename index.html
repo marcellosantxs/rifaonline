@@ -4,37 +4,163 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>🎉 Rifa Especial 25k Seguidores — Prêmio R$3.000</title>
+  <title>Raspadinha Online</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-    :root{
-      --bg:#0b0f19;
-      --card:#141b2d;
-      --accent:#00d084;
-      --accent-dark:#00a46c;
-      --muted:#94a3b8;
-      --white:#f5f8fa;
+    :root{--bg:#0f172a;--card:#111827;--accent:#10b981}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,#071028 0%, #071a2e 100%);color:#e6eef6;display:flex;align-items:center;justify-content:center;height:100vh}
+    .wrap{width:360px;max-width:95%;}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+    h1{font-size:18px;margin:0 0 10px}
+    p{margin:0 0 12px;font-size:13px;color:#cbd5e1}
+    .ticket{position:relative;background:#0b1220;border-radius:10px;padding:14px;overflow:hidden}
+    .prize{height:68px;border-radius:8px;background:#0b1220;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+    .cover{position:relative;margin-top:12px}
+    canvas{display:block;width:100%;height:90px;border-radius:8px;background:linear-gradient(90deg,#e2e8f0,#cbd5e1);touch-action:none}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{flex:1;padding:10px;border-radius:8px;border:0;background:var(--accent);color:#042122;font-weight:600;cursor:pointer}
+    button.secondary{background:#334155;color:#e6eef6}
+    .result{margin-top:12px;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));text-align:center}
+    small{display:block;margin-top:6px;color:#9aa6b2}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Raspadinha Online</h1>
+      <p>Raspe o painel para descobrir seu prêmio. Este modelo é pronto para testar: você pode ajustar as probabilidades e prêmios no código.</p><div class="ticket">
+    <div class="prize" id="prizeText">---</div>
+    <div class="cover">
+      <canvas id="scratchCanvas" width="600" height="150"></canvas>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="newBtn">Gerar nova</button>
+    <button id="revealBtn" class="secondary">Revelar</button>
+  </div>
+
+  <div class="result" id="resultBox">Boa sorte! <small>Arraste o dedo ou o mouse sobre a área cinza.</small></div>
+</div>
+
+  </div>  <script>
+    // CONFIGURAÇÃO: prêmios e probabilidades (soma das probabilidades = 1)
+    const prizes = [
+      {label: 'R$ 0,50', value: 0.5, prob: 0.5},
+      {label: 'R$ 1,00', value: 1.0, prob: 0.3},
+      {label: 'R$ 5,00', value: 5.0, prob: 0.15},
+      {label: 'Bônus: 1 cupom', value: 0, prob: 0.04},
+      {label: 'GRANDE: R$ 50,00', value: 50.0, prob: 0.01}
+    ];
+
+    // Helper: escolhe prêmio baseado em probabilidade
+    function choosePrize(){
+      const r = Math.random();
+      let acc = 0;
+      for(const p of prizes){
+        acc += p.prob;
+        if(r <= acc) return p;
+      }
+      return prizes[prizes.length-1];
     }
-    *{box-sizing:border-box;font-family:'Poppins',sans-serif;}
-    body{
-      margin:0;
-      background:linear-gradient(180deg,#020617 0%, #0f172a 100%);
-      color:var(--white);
-      padding:16px;
-      min-height:100vh;
+
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let lastPoint = null;
+    const deviceRatio = window.devicePixelRatio || 1;
+
+    // ajustar resolução do canvas para ficar nítido
+    function fitCanvas(){
+      const styleW = canvas.clientWidth;
+      const styleH = canvas.clientHeight;
+      canvas.width = Math.round(styleW * deviceRatio);
+      canvas.height = Math.round(styleH * deviceRatio);
+      canvas.style.width = styleW + 'px';
+      canvas.style.height = styleH + 'px';
+      // desenhar camada de cobertura
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.globalCompositeOperation = 'destination-out';
     }
-    header{
-      text-align:center;
-      padding:20px 10px;
+
+    // iniciar
+    fitCanvas();
+
+    function getPointerPos(e){
+      const rect = canvas.getBoundingClientRect();
+      const x = ((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) * deviceRatio;
+      const y = ((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) * deviceRatio;
+      return {x,y};
     }
-    h1{
-      margin:0;
-      font-size:28px;
-      font-weight:700;
-      color:var(--accent);
+
+    function drawLine(p1,p2){
+      if(!p1 || !p2) return;
+      ctx.lineWidth = 30 * deviceRatio; // largura do traço de raspagem
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(p1.x,p1.y);
+      ctx.lineTo(p2.x,p2.y);
+      ctx.stroke();
     }
-    p.small{
-      margin:6px 0;
+
+    canvas.addEventListener('mousedown', (e)=>{isDrawing=true; lastPoint = getPointerPos(e);});
+    canvas.addEventListener('mousemove', (e)=>{ if(!isDrawing) return; const p = getPointerPos(e); drawLine(lastPoint,p); lastPoint = p; checkReveal(); });
+    canvas.addEventListener('mouseup', ()=>{isDrawing=false; lastPoint=null});
+    canvas.addEventListener('mouseleave', ()=>{isDrawing=false; lastPoint=null});
+
+    // touch
+    canvas.addEventListener('touchstart', (e)=>{e.preventDefault(); isDrawing=true; lastPoint = getPointerPos(e);});
+    canvas.addEventListener('touchmove', (e)=>{e.preventDefault(); if(!isDrawing) return; const p = getPointerPos(e); drawLine(lastPoint,p); lastPoint = p; checkReveal();});
+    canvas.addEventListener('touchend', ()=>{isDrawing=false; lastPoint=null});
+
+    // Verifica quanto da área foi raspada
+    function checkReveal(){
+      const img = ctx.getImageData(0,0,canvas.width,canvas.height);
+      let transparent = 0;
+      for(let i=3;i<img.data.length;i+=4){
+        if(img.data[i] === 0) transparent++;
+      }
+      const pct = transparent / (canvas.width*canvas.height);
+      if(pct > 0.45){ // 45% raspado -> revelar
+        revealPrize();
+      }
+    }
+
+    // lógica de exibir prêmio
+    let currentPrize = null;
+    const prizeText = document.getElementById('prizeText');
+    const resultBox = document.getElementById('resultBox');
+
+    function setupNewTicket(){
+      // limpa canvas cobrindo novamente
+      fitCanvas();
+      ctx.globalCompositeOperation = 'destination-out';
+      currentPrize = choosePrize();
+      prizeText.textContent = 'Raspando...';
+      resultBox.innerHTML = 'Boa sorte! <small>Arraste o dedo ou o mouse sobre a área cinza.</small>';
+    }
+
+    function revealPrize(){
+      // limpar completamente a cobertura
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      prizeText.textContent = currentPrize.label;
+      const msg = currentPrize.value > 0 ? `Você ganhou ${currentPrize.label}!` : `Você ganhou: ${currentPrize.label}`;
+      resultBox.innerHTML = `<strong>${msg}</strong><br><small>Compartilhe ou gere outro bilhete.</small>`;
+    }
+
+    // botões
+    document.getElementById('newBtn').addEventListener('click', ()=>{setupNewTicket();});
+    document.getElementById('revealBtn').addEventListener('click', ()=>{revealPrize();});
+
+    // iniciar pela primeira vez
+    setupNewTicket();
+
+    // redimensiona quando janela altera
+    window.addEventListener('resize', ()=>{ // preserva camada raspada ao redimensionar é complexo; aqui reiniciamos
+      fitCanvas();
+    });
+  </script></body>
+</html>      margin:6px 0;
       color:var(--muted);
       font-size:14px;
     }
