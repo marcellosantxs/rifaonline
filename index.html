@@ -1,40 +1,228 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Raspadinha Online</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaspaGreen</title>
   <style>
-    :root{--bg:#0f172a;--card:#111827;--accent:#10b981}
-    body{margin:0;font-family:Inter, system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,#071028 0%, #071a2e 100%);color:#e6eef6;display:flex;align-items:center;justify-content:center;height:100vh}
-    .wrap{width:360px;max-width:95%;}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
-    h1{font-size:18px;margin:0 0 10px}
-    p{margin:0 0 12px;font-size:13px;color:#cbd5e1}
-    .ticket{position:relative;background:#0b1220;border-radius:10px;padding:14px;overflow:hidden}
-    .prize{height:68px;border-radius:8px;background:#0b1220;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
-    .cover{position:relative;margin-top:12px}
-    canvas{display:block;width:100%;height:90px;border-radius:8px;background:linear-gradient(90deg,#e2e8f0,#cbd5e1);touch-action:none}
-    .controls{display:flex;gap:8px;margin-top:12px}
-    button{flex:1;padding:10px;border-radius:8px;border:0;background:var(--accent);color:#042122;font-weight:600;cursor:pointer}
-    button.secondary{background:#334155;color:#e6eef6}
-    .result{margin-top:12px;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));text-align:center}
-    small{display:block;margin-top:6px;color:#9aa6b2}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+    header {
+      background: #00ff7f;
+      color: #000;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .banner {
+      background: url('https://picsum.photos/800/300?random=1') center/cover no-repeat;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 5px #000;
+    }
+    .container {
+      padding: 20px;
+    }
+    h2 {
+      color: #00ff7f;
+      margin-top: 30px;
+    }
+    .winners, .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .card {
+      background: #1c1c1c;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px #00ff7f55;
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #111;
+      padding: 10px 0;
+      border-top: 2px solid #00ff7f;
+    }
+    footer button {
+      background: none;
+      border: none;
+      color: #00ff7f;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Raspadinha */
+    #jogo {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #scratchCanvas {
+      border: 2px solid #00ff7f;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Raspadinha Online</h1>
-      <p>Raspe o painel para descobrir seu prêmio. Este modelo é pronto para testar: você pode ajustar as probabilidades e prêmios no código.</p><div class="ticket">
-    <div class="prize" id="prizeText">---</div>
-    <div class="cover">
-      <canvas id="scratchCanvas" width="600" height="150"></canvas>
+  <header>🎉 RaspaGreen 🎉</header>
+
+  <div id="home">
+    <div class="banner">Ganhe Prêmios Agora!</div>
+
+    <div class="container">
+      <h2>Últimos Ganhadores</h2>
+      <div class="winners">
+        <div class="card">💰 João - R$200</div>
+        <div class="card">💎 Maria - R$500</div>
+        <div class="card">🎁 Pedro - R$100</div>
+        <div class="card">🍀 Ana - R$50</div>
+      </div>
+
+      <h2>Destaques</h2>
+      <div class="highlights">
+        <div class="card">
+          <img src="https://picsum.photos/200/150?random=2" alt="Promoção">
+          <p>Promoção do Dia</p>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/200/150?random=3" alt="Super Prêmio">
+          <p>Super Prêmio</p>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/200/150?random=4" alt="Novidade">
+          <p>Novidade Exclusiva</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="controls">
+  <div id="jogo" class="container">
+    <h2>🪙 Sua Raspadinha</h2>
+    <p>Raspe para revelar se você ganhou!</p>
+    <canvas id="scratchCanvas" width="300" height="150"></canvas>
+    <p id="resultado" style="margin-top:15px; font-size:1.2rem; color:#00ff7f;"></p>
+  </div>
+
+  <footer>
+    <button onclick="showPage('home')">🏠 Início</button>
+    <button onclick="showPage('jogo')">🎮 Jogar</button>
+  </footer>
+
+  <script>
+    function showPage(page) {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("jogo").style.display = "none";
+      document.getElementById(page).style.display = "block";
+    }
+
+    // Raspadinha
+    const canvas = document.getElementById("scratchCanvas");
+    const ctx = canvas.getContext("2d");
+    const resultado = document.getElementById("resultado");
+
+    // Resultado aleatório
+    const premios = ["💎 Você ganhou R$500!", "💰 Você ganhou R$100!", "🎁 Tente novamente!", "🍀 Você ganhou R$50!"];
+    const premioSorteado = premios[Math.floor(Math.random() * premios.length)];
+    resultado.innerText = "";
+
+    // Fundo com prêmio
+    ctx.fillStyle = "#00ff7f";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(premioSorteado, canvas.width / 2, canvas.height / 2);
+
+    // Camada cinza para raspar
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "#999";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let isDrawing = false;
+
+    function getMousePos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function getTouchPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+      };
+    }
+
+    function draw(x, y) {
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+
+    canvas.addEventListener("mousedown", e => { isDrawing = true; });
+    canvas.addEventListener("mouseup", e => { isDrawing = false; });
+    canvas.addEventListener("mousemove", e => {
+      if (isDrawing) {
+        const pos = getMousePos(e);
+        draw(pos.x, pos.y);
+      }
+    });
+
+    canvas.addEventListener("touchstart", e => { isDrawing = true; });
+    canvas.addEventListener("touchend", e => { isDrawing = false; });
+    canvas.addEventListener("touchmove", e => {
+      if (isDrawing) {
+        const pos = getTouchPos(e);
+        draw(pos.x, pos.y);
+      }
+    });
+
+    // Mostrar resultado ao raspar bastante
+    function checkScratch() {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let cleared = 0;
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        if (imageData.data[i + 3] === 0) cleared++;
+      }
+      if (cleared > imageData.data.length / 8) {
+        resultado.innerText = premioSorteado;
+      }
+    }
+
+    setInterval(checkScratch, 1000);
+
+    // Exibir Home ao iniciar
+    showPage("home");
+  </script>
+</body>
+</html>  <div class="controls">
     <button id="newBtn">Gerar nova</button>
     <button id="revealBtn" class="secondary">Revelar</button>
   </div>
