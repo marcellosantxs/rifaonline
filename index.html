@@ -1,331 +1,151 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RaspaGreen</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-    }
-    header {
-      background: #00ff7f;
-      color: #000;
-      text-align: center;
-      padding: 15px;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .banner {
-      background: url('https://picsum.photos/800/300?random=1') center/cover no-repeat;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 2px 2px 5px #000;
-    }
-    .container {
-      padding: 20px;
-    }
-    h2 {
-      color: #00ff7f;
-      margin-top: 30px;
-    }
-    .winners, .highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
-    }
-    .card {
-      background: #1c1c1c;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 10px #00ff7f55;
-    }
-    .card img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      background: #111;
-      padding: 10px 0;
-      border-top: 2px solid #00ff7f;
-    }
-    footer button {
-      background: none;
-      border: none;
-      color: #00ff7f;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    /* Raspadinha */
-    #jogo {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-    }
-    #scratchCanvas {
-      border: 2px solid #00ff7f;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromoZone - Links Oficiais</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00b894;
+            --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%);
+            --text-color: #2d3436;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .links-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .link-card:hover {
+            transform: translateY(-3px);
+            background: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .link-card i {
+            font-size: 1.4rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* Cores específicas para ícones */
+        .fa-whatsapp { color: #25D366; }
+        .fa-telegram { color: #0088cc; }
+        .fa-shopping-cart { color: var(--primary-color); }
+
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
-  <header>🎉 RaspaGreen 🎉</header>
-
-  <div id="home">
-    <div class="banner">Ganhe Prêmios Agora!</div>
 
     <div class="container">
-      <h2>Últimos Ganhadores</h2>
-      <div class="winners">
-        <div class="card">💰 João - R$200</div>
-        <div class="card">💎 Maria - R$500</div>
-        <div class="card">🎁 Pedro - R$100</div>
-        <div class="card">🍀 Ana - R$50</div>
-      </div>
+        <img src="https://via.placeholder.com/100" alt="Logo PromoZone" class="profile-img">
+        
+        <h1>@promozone</h1>
+        <p>Tenha acesso as melhores Ofertas e Promoções do Brasil!</p>
 
-      <h2>Destaques</h2>
-      <div class="highlights">
-        <div class="card">
-          <img src="https://picsum.photos/200/150?random=2" alt="Promoção">
-          <p>Promoção do Dia</p>
+        <div class="links-area">
+            
+            <a href="SEU_LINK_AQUI" class="link-card" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>Grupo no WhatsApp</span>
+            </a>
+
+            <a href="SEU_LINK_AQUI" class="link-card" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>Canal no WhatsApp</span>
+            </a>
+
+            <a href="SEU_LINK_AQUI" class="link-card" target="_blank">
+                <i class="fab fa-telegram"></i>
+                <span>Grupo no Telegram</span>
+            </a>
+
+            <a href="SEU_LINK_AQUI" class="link-card" target="_blank">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Rifle Jade Mais Nitro 5.5</span>
+            </a>
+
+            <a href="SEU_LINK_AQUI" class="link-card" target="_blank">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Mochila God Talent 40L</span>
+            </a>
+
         </div>
-        <div class="card">
-          <img src="https://picsum.photos/200/150?random=3" alt="Super Prêmio">
-          <p>Super Prêmio</p>
-        </div>
-        <div class="card">
-          <img src="https://picsum.photos/200/150?random=4" alt="Novidade">
-          <p>Novidade Exclusiva</p>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div id="jogo" class="container">
-    <h2>🪙 Sua Raspadinha</h2>
-    <p>Raspe para revelar se você ganhou!</p>
-    <canvas id="scratchCanvas" width="300" height="150"></canvas>
-    <p id="resultado" style="margin-top:15px; font-size:1.2rem; color:#00ff7f;"></p>
-  </div>
+    <div class="footer">
+        © 2026 PromoZone • Desenvolvido com Gemini
+    </div>
 
-  <footer>
-    <button onclick="showPage('home')">🏠 Início</button>
-    <button onclick="showPage('jogo')">🎮 Jogar</button>
-  </footer>
-
-  <script>
-    function showPage(page) {
-      document.getElementById("home").style.display = "none";
-      document.getElementById("jogo").style.display = "none";
-      document.getElementById(page).style.display = "block";
-    }
-
-    // Raspadinha
-    const canvas = document.getElementById("scratchCanvas");
-    const ctx = canvas.getContext("2d");
-    const resultado = document.getElementById("resultado");
-
-    // Resultado aleatório
-    const premios = ["💎 Você ganhou R$500!", "💰 Você ganhou R$100!", "🎁 Tente novamente!", "🍀 Você ganhou R$50!"];
-    const premioSorteado = premios[Math.floor(Math.random() * premios.length)];
-    resultado.innerText = "";
-
-    // Fundo com prêmio
-    ctx.fillStyle = "#00ff7f";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000";
-    ctx.font = "20px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(premioSorteado, canvas.width / 2, canvas.height / 2);
-
-    // Camada cinza para raspar
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "#999";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    let isDrawing = false;
-
-    function getMousePos(e) {
-      const rect = canvas.getBoundingClientRect();
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-    }
-
-    function getTouchPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top
-      };
-    }
-
-    function draw(x, y) {
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.beginPath();
-      ctx.arc(x, y, 15, 0, Math.PI * 2, false);
-      ctx.fill();
-    }
-
-    canvas.addEventListener("mousedown", e => { isDrawing = true; });
-    canvas.addEventListener("mouseup", e => { isDrawing = false; });
-    canvas.addEventListener("mousemove", e => {
-      if (isDrawing) {
-        const pos = getMousePos(e);
-        draw(pos.x, pos.y);
-      }
-    });
-
-    canvas.addEventListener("touchstart", e => { isDrawing = true; });
-    canvas.addEventListener("touchend", e => { isDrawing = false; });
-    canvas.addEventListener("touchmove", e => {
-      if (isDrawing) {
-        const pos = getTouchPos(e);
-        draw(pos.x, pos.y);
-      }
-    });
-
-    // Mostrar resultado ao raspar bastante
-    function checkScratch() {
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      let cleared = 0;
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        if (imageData.data[i + 3] === 0) cleared++;
-      }
-      if (cleared > imageData.data.length / 8) {
-        resultado.innerText = premioSorteado;
-      }
-    }
-
-    setInterval(checkScratch, 1000);
-
-    // Exibir Home ao iniciar
-    showPage("home");
-  </script>
 </body>
-</html>  <div class="controls">
-    <button id="newBtn">Gerar nova</button>
-    <button id="revealBtn" class="secondary">Revelar</button>
-  </div>
-
-  <div class="result" id="resultBox">Boa sorte! <small>Arraste o dedo ou o mouse sobre a área cinza.</small></div>
-</div>
-
-  </div>  <script>
-    // CONFIGURAÇÃO: prêmios e probabilidades (soma das probabilidades = 1)
-    const prizes = [
-      {label: 'R$ 0,50', value: 0.5, prob: 0.5},
-      {label: 'R$ 1,00', value: 1.0, prob: 0.3},
-      {label: 'R$ 5,00', value: 5.0, prob: 0.15},
-      {label: 'Bônus: 1 cupom', value: 0, prob: 0.04},
-      {label: 'GRANDE: R$ 50,00', value: 50.0, prob: 0.01}
-    ];
-
-    // Helper: escolhe prêmio baseado em probabilidade
-    function choosePrize(){
-      const r = Math.random();
-      let acc = 0;
-      for(const p of prizes){
-        acc += p.prob;
-        if(r <= acc) return p;
-      }
-      return prizes[prizes.length-1];
-    }
-
-    const canvas = document.getElementById('scratchCanvas');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-    let lastPoint = null;
-    const deviceRatio = window.devicePixelRatio || 1;
-
-    // ajustar resolução do canvas para ficar nítido
-    function fitCanvas(){
-      const styleW = canvas.clientWidth;
-      const styleH = canvas.clientHeight;
-      canvas.width = Math.round(styleW * deviceRatio);
-      canvas.height = Math.round(styleH * deviceRatio);
-      canvas.style.width = styleW + 'px';
-      canvas.style.height = styleH + 'px';
-      // desenhar camada de cobertura
-      ctx.fillStyle = '#cbd5e1';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.globalCompositeOperation = 'destination-out';
-    }
-
-    // iniciar
-    fitCanvas();
-
-    function getPointerPos(e){
-      const rect = canvas.getBoundingClientRect();
-      const x = ((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) * deviceRatio;
-      const y = ((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) * deviceRatio;
-      return {x,y};
-    }
-
-    function drawLine(p1,p2){
-      if(!p1 || !p2) return;
-      ctx.lineWidth = 30 * deviceRatio; // largura do traço de raspagem
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(p1.x,p1.y);
-      ctx.lineTo(p2.x,p2.y);
-      ctx.stroke();
-    }
-
-    canvas.addEventListener('mousedown', (e)=>{isDrawing=true; lastPoint = getPointerPos(e);});
-    canvas.addEventListener('mousemove', (e)=>{ if(!isDrawing) return; const p = getPointerPos(e); drawLine(lastPoint,p); lastPoint = p; checkReveal(); });
-    canvas.addEventListener('mouseup', ()=>{isDrawing=false; lastPoint=null});
-    canvas.addEventListener('mouseleave', ()=>{isDrawing=false; lastPoint=null});
-
-    // touch
-    canvas.addEventListener('touchstart', (e)=>{e.preventDefault(); isDrawing=true; lastPoint = getPointerPos(e);});
-    canvas.addEventListener('touchmove', (e)=>{e.preventDefault(); if(!isDrawing) return; const p = getPointerPos(e); drawLine(lastPoint,p); lastPoint = p; checkReveal();});
-    canvas.addEventListener('touchend', ()=>{isDrawing=false; lastPoint=null});
-
-    // Verifica quanto da área foi raspada
-    function checkReveal(){
-      const img = ctx.getImageData(0,0,canvas.width,canvas.height);
-      let transparent = 0;
-      for(let i=3;i<img.data.length;i+=4){
-        if(img.data[i] === 0) transparent++;
-      }
-      const pct = transparent / (canvas.width*canvas.height);
-      if(pct > 0.45){ // 45% raspado -> revelar
-        revealPrize();
-      }
-    }
-
-    // lógica de exibir prêmio
-    let currentPrize = null;
-    const prizeText = document.getElementById('prizeText');
-    const resultBox = document.getElementById('resultBox');
-
-    function setupNewTicket(){
-      // limpa canvas cobrindo novamente
-      fitCanvas();
-      ctx.globalCompositeOperation = 'destination-out';
-      currentPrize = choosePrize();
-      prizeText.textContent = 'Raspando...';
-      resultBox.innerHTML = 'Boa sorte! <small>Arraste o dedo ou o mouse sobre a área cinza.</small>';
+          </html>mall>Arraste o dedo ou o mouse sobre a área cinza.</small>';
     }
 
     function revealPrize(){
